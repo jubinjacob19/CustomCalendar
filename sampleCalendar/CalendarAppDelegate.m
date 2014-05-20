@@ -1,14 +1,6 @@
-//
-//  SampleAppDelegate.m
-//  sampleCalendar
-//
-//  Created by Jubin Jacob on 19/05/14.
-//  Copyright (c) 2014 Attinad. All rights reserved.
-//
+#import "CalendarAppDelegate.h"
 
-#import "SampleAppDelegate.h"
-
-@implementation SampleAppDelegate
+@implementation CalendarAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

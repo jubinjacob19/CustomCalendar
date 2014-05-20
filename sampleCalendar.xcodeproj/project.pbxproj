@@ -12,15 +12,16 @@
 		77A30EF51929B48400418A45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A30EF41929B48400418A45 /* UIKit.framework */; };
 		77A30EFB1929B48400418A45 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77A30EF91929B48400418A45 /* InfoPlist.strings */; };
 		77A30EFD1929B48400418A45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30EFC1929B48400418A45 /* main.m */; };
-		77A30F011929B48400418A45 /* SampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F001929B48400418A45 /* SampleAppDelegate.m */; };
+		77A30F011929B48400418A45 /* CalendarAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F001929B48400418A45 /* CalendarAppDelegate.m */; };
 		77A30F041929B48400418A45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77A30F021929B48400418A45 /* Main.storyboard */; };
-		77A30F071929B48400418A45 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F061929B48400418A45 /* SampleViewController.m */; };
 		77A30F091929B48400418A45 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77A30F081929B48400418A45 /* Images.xcassets */; };
 		77A30F101929B48400418A45 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A30F0F1929B48400418A45 /* XCTest.framework */; };
 		77A30F111929B48400418A45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A30EF01929B48400418A45 /* Foundation.framework */; };
 		77A30F121929B48400418A45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A30EF41929B48400418A45 /* UIKit.framework */; };
 		77A30F1A1929B48400418A45 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77A30F181929B48400418A45 /* InfoPlist.strings */; };
 		77A30F1C1929B48400418A45 /* sampleCalendarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F1B1929B48400418A45 /* sampleCalendarTests.m */; };
+		77A30F271929E6DB00418A45 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F261929E6DB00418A45 /* CalendarViewController.m */; };
+		77A30F2A1929FA2D00418A45 /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F291929FA2D00418A45 /* CalendarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,17 +43,19 @@
 		77A30EFA1929B48400418A45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		77A30EFC1929B48400418A45 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		77A30EFE1929B48400418A45 /* sampleCalendar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sampleCalendar-Prefix.pch"; sourceTree = "<group>"; };
-		77A30EFF1929B48400418A45 /* SampleAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleAppDelegate.h; sourceTree = "<group>"; };
-		77A30F001929B48400418A45 /* SampleAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppDelegate.m; sourceTree = "<group>"; };
+		77A30EFF1929B48400418A45 /* CalendarAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarAppDelegate.h; sourceTree = "<group>"; };
+		77A30F001929B48400418A45 /* CalendarAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarAppDelegate.m; sourceTree = "<group>"; };
 		77A30F031929B48400418A45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		77A30F051929B48400418A45 /* SampleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
-		77A30F061929B48400418A45 /* SampleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
 		77A30F081929B48400418A45 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		77A30F0E1929B48400418A45 /* sampleCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sampleCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77A30F0F1929B48400418A45 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		77A30F171929B48400418A45 /* sampleCalendarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sampleCalendarTests-Info.plist"; sourceTree = "<group>"; };
 		77A30F191929B48400418A45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		77A30F1B1929B48400418A45 /* sampleCalendarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sampleCalendarTests.m; sourceTree = "<group>"; };
+		77A30F251929E6DB00418A45 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		77A30F261929E6DB00418A45 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		77A30F281929FA2D00418A45 /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarView.h; sourceTree = "<group>"; };
+		77A30F291929FA2D00418A45 /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +115,13 @@
 		77A30EF61929B48400418A45 /* sampleCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				77A30EFF1929B48400418A45 /* SampleAppDelegate.h */,
-				77A30F001929B48400418A45 /* SampleAppDelegate.m */,
+				77A30EFF1929B48400418A45 /* CalendarAppDelegate.h */,
+				77A30F001929B48400418A45 /* CalendarAppDelegate.m */,
 				77A30F021929B48400418A45 /* Main.storyboard */,
-				77A30F051929B48400418A45 /* SampleViewController.h */,
-				77A30F061929B48400418A45 /* SampleViewController.m */,
+				77A30F251929E6DB00418A45 /* CalendarViewController.h */,
+				77A30F261929E6DB00418A45 /* CalendarViewController.m */,
+				77A30F281929FA2D00418A45 /* CalendarView.h */,
+				77A30F291929FA2D00418A45 /* CalendarView.m */,
 				77A30F081929B48400418A45 /* Images.xcassets */,
 				77A30EF71929B48400418A45 /* Supporting Files */,
 			);
@@ -250,9 +255,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77A30F011929B48400418A45 /* SampleAppDelegate.m in Sources */,
+				77A30F271929E6DB00418A45 /* CalendarViewController.m in Sources */,
+				77A30F2A1929FA2D00418A45 /* CalendarView.m in Sources */,
+				77A30F011929B48400418A45 /* CalendarAppDelegate.m in Sources */,
 				77A30EFD1929B48400418A45 /* main.m in Sources */,
-				77A30F071929B48400418A45 /* SampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +386,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sampleCalendar/sampleCalendar-Prefix.pch";
 				INFOPLIST_FILE = "sampleCalendar/sampleCalendar-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -393,6 +400,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sampleCalendar/sampleCalendar-Prefix.pch";
 				INFOPLIST_FILE = "sampleCalendar/sampleCalendar-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -457,6 +465,7 @@
 				77A30F211929B48400418A45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77A30F221929B48400418A45 /* Build configuration list for PBXNativeTarget "sampleCalendarTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +474,7 @@
 				77A30F241929B48400418A45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

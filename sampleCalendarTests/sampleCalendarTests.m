@@ -1,10 +1,4 @@
-//
-//  sampleCalendarTests.m
-//  sampleCalendarTests
-//
-//  Created by Jubin Jacob on 19/05/14.
-//  Copyright (c) 2014 Attinad. All rights reserved.
-//
+
 
 #import <XCTest/XCTest.h>
 
