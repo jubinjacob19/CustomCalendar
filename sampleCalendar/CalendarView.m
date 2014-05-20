@@ -216,7 +216,7 @@
         NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
         components.day = _selectedDate;
         NSDate *clickedDate = [gregorian dateFromComponents:components];
-        NSLog(@"currentDate (GMT)%@",clickedDate);
+        [self.delegate tappedOnDate:clickedDate];
     }
 }
 
