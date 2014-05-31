@@ -234,6 +234,7 @@
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
+    components.day = 1;
     components.month += 1;
     self.calendarDate = [gregorian dateFromComponents:components];
     [UIView transitionWithView:self
@@ -250,6 +251,7 @@
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
+    components.day = 1;
     components.month -= 1;
     self.calendarDate = [gregorian dateFromComponents:components];
     [UIView transitionWithView:self
