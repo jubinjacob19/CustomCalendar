@@ -6,6 +6,8 @@
 {
     
     NSCalendar *gregorian;
+    NSInteger _selectedMonth;
+    NSInteger _selectedYear;
 }
 
 @end
@@ -39,17 +41,15 @@
 - (void)drawRect:(CGRect)rect
 {
     
-    
+    [self setCalendarParameters];
     _weekNames = @[@"Mo",@"Tu",@"We",@"Th",@"Fr",@"Sa",@"Su"];
-    
-    gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
-    _selectedDate  =components.day;
+//    _selectedDate  =components.day;
     components.day = 1;
     NSDate *firstDayOfMonth = [gregorian dateFromComponents:components];
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:firstDayOfMonth];
     int weekday = [comps weekday];
-    
+//      NSLog(@"components%d %d %d",_selectedDate,_selectedMonth,_selectedYear);
     weekday  = weekday - 2;
     
     if(weekday < 0)
@@ -128,7 +128,7 @@
             [columnView setFrame:CGRectMake(button.frame.size.width-4, 0, 4, button.frame.size.width)];
             [button addSubview:columnView];
         }
-        if(i+1 ==_selectedDate)
+        if(i+1 ==_selectedDate && components.month == _selectedMonth && components.year == _selectedYear)
         {
             [button setBackgroundColor:[UIColor brownColor]];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -224,6 +224,8 @@
         _selectedDate = sender.tag;
         NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
         components.day = _selectedDate;
+        _selectedMonth = components.month;
+        _selectedYear = components.year;
         NSDate *clickedDate = [gregorian dateFromComponents:components];
         [self.delegate tappedOnDate:clickedDate];
     }
@@ -260,6 +262,16 @@
                     animations:^ { [self setNeedsDisplay]; }
                     completion:nil];
 }
-
+-(void)setCalendarParameters
+{
+    if(gregorian == nil)
+    {
+        gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
+        _selectedDate  = components.day;
+        _selectedMonth = components.month;
+        _selectedYear = components.year;
+    }
+}
 
 @end
