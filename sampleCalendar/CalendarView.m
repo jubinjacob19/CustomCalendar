@@ -209,7 +209,9 @@
 }
 -(IBAction)tappedDate:(UIButton *)sender
 {
-    if(_selectedDate!=sender.tag)
+    gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorian components:(NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:self.calendarDate];
+    if(!(_selectedDate == sender.tag && _selectedMonth == [components month] && _selectedYear == [components year]))
     {
         if(_selectedDate != -1)
         {
