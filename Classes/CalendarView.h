@@ -19,21 +19,25 @@
 @property (nonatomic,weak) id<CalendarDelegate> delegate;
 @property (nonatomic,weak) id<CalendarDataSource> datasource;
 
-// Border
+// Text color for month and weekday labels
+@property (nonatomic, strong) UIColor * monthAndDayTextColor;
 
+// Border
 @property (nonatomic, strong) UIColor * borderColor;
 @property (nonatomic, assign) NSInteger borderWidth;
 
 // Button color
-
 @property (nonatomic, strong) UIColor * dayBgColorWithoutData;
 @property (nonatomic, strong) UIColor * dayBgColorWithData;
 @property (nonatomic, strong) UIColor * dayBgColorSelected;
-
 @property (nonatomic, strong) UIColor * dayTxtColorWithoutData;
 @property (nonatomic, strong) UIColor * dayTxtColorWithData;
 @property (nonatomic, strong) UIColor * dayTxtColorSelected;
 
+// Allows or disallows the user to change month when tapping a day button from another month
+@property (nonatomic, assign) BOOL allowsChangeMonthByDayTap;
+@property (nonatomic, assign) BOOL allowsChangeMonthBySwipe;
+@property (nonatomic, assign) BOOL allowsChangeMonthByButtons;
 
 @end
 
@@ -44,6 +48,7 @@
 -(void)tappedOnDate:(NSDate *)selectedDate;
 
 @end
+
 
 
 @protocol CalendarDataSource <NSObject>

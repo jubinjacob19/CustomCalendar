@@ -1,26 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="NyJ-VD-FOI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4Nb-SU-W6G">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Calendar View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="Gtz-F0-WaR">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="4Nb-SU-W6G" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="4mg-qc-Abq">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="NyJ-VD-FOI" kind="relationship" relationship="rootViewController" id="dow-eP-zud"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bVD-Og-LMr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="273" y="-38"/>
+        </scene>
+        <!--Default Calendar View Controller-->
         <scene sceneID="sVX-bW-Twh">
             <objects>
-                <viewController id="NyJ-VD-FOI" customClass="CalendarViewController" sceneMemberID="viewController">
+                <viewController id="NyJ-VD-FOI" customClass="DefaultCalendarViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vWc-xQ-5ym"/>
                         <viewControllerLayoutGuide type="bottom" id="EwJ-3Z-pGd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mA6-ud-c1l">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enx-eU-Za6">
+                                <rect key="frame" x="100" y="454" width="120" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="3Ik-Xi-41J"/>
+                                </constraints>
+                                <state key="normal" title="Custom Calendar">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="8d1-rs-5YC" kind="push" id="hEn-jt-TpT"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to change months" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qf-bO-yUX">
+                                <rect key="frame" x="85" y="408" width="150" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="enx-eU-Za6" secondAttribute="bottom" constant="20" id="6kF-SA-bZj"/>
+                            <constraint firstAttribute="centerX" secondItem="8qf-bO-yUX" secondAttribute="centerX" id="8Zr-qH-bYV"/>
+                            <constraint firstAttribute="centerX" secondItem="enx-eU-Za6" secondAttribute="centerX" id="Iz4-b8-XhY"/>
+                            <constraint firstAttribute="bottom" secondItem="8qf-bO-yUX" secondAttribute="bottom" constant="80" id="z6t-us-Fbt"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Cwj-yw-Ei0"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JyX-PT-AOT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="772" y="-38"/>
+        </scene>
+        <!--Custom Calendar View Controller - Custom Calendar-->
+        <scene sceneID="qP1-GU-rlW">
+            <objects>
+                <viewController title="Custom Calendar" id="8d1-rs-5YC" customClass="CustomCalendarViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IA0-X8-q8v"/>
+                        <viewControllerLayoutGuide type="bottom" id="bE6-qC-DQt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gT8-m9-GTZ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VV5-7J-aF1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="56y-Ku-0ZR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1164" y="-38"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
