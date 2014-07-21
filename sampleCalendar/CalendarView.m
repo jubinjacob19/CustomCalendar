@@ -8,10 +8,19 @@
 @property (nonatomic, assign) NSInteger selectedYear;
 @property (nonatomic, strong) UIColor * mainColor;
 
-@property (nonatomic, assign) NSInteger borderWidth;
 @property (nonatomic, assign) NSInteger dayWidth;
 
+@property (nonatomic, assign) NSInteger originX;
+@property (nonatomic, assign) NSInteger originY;
+
 @property (nonatomic, assign) NSUInteger dayInfoUnits;
+@property (nonatomic, strong) NSArray * weekDayNames;
+
+@property (nonatomic, assign) NSInteger selectedDate;
+
+// View shake
+@property (nonatomic, assign) NSInteger shakes;
+@property (nonatomic, assign) NSInteger shakeDirection;
 
 @end
 @implementation CalendarView
@@ -21,98 +30,113 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
+        _dayWidth                   = frame.size.width/8;
+        _originX                    = (frame.size.width - 7*_dayWidth)/2;
+        _gregorian                  = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        _mainColor                  = RGBCOLOR(0, 174, 255);
+        _borderWidth                = 1;
+        _originY                    = _dayWidth;
+        _calendarDate               = [NSDate date];
+        _dayInfoUnits               = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
         
-        _gregorian          = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        _weekNames          = @[@"Mo",@"Tu",@"We",@"Th",@"Fr",@"Sa",@"Su"];
-        _mainColor          = RGBCOLOR(0, 174, 255);
-        _borderWidth        = 1;
-        _dayWidth           = 40;
-        _calendarDate       = [NSDate date];
+        _dayBgColorWithoutData      = RGBCOLOR(208, 208, 214);
+        _dayBgColorWithData         = RGBCOLOR(21, 124, 229);
+        _dayBgColorSelected         = RGBCOLOR(94, 94, 94);
         
-        _dayInfoUnits       = NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+        _dayTxtColorWithoutData     = RGBCOLOR(57, 69, 84);
+        _dayTxtColorWithData        = [UIColor whiteColor];
+        _dayTxtColorSelected        = [UIColor whiteColor];
         
-        UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
-        swipeleft.direction=UISwipeGestureRecognizerDirectionLeft;
-        [self addGestureRecognizer:swipeleft];
-        UISwipeGestureRecognizer * swipeRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
-        swipeRight.direction=UISwipeGestureRecognizerDirectionRight;
-        [self addGestureRecognizer:swipeRight];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.size.height-100, self.bounds.size.width, 44)];
-        [label setBackgroundColor:_mainColor];
-        [label setTextColor:[UIColor whiteColor]];
-        [label setText:@"swipe to change months"];
-        label.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:label];
+        _borderColor                = RGBCOLOR(159, 162, 172);
         
-        [UILabel animateWithDuration:2 animations:^{
-            label.alpha = 0;
-        }];
+        
+        NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:[NSDate date]];
+        
+        _selectedDate       = components.day;
+        _selectedMonth      = components.month;
+        _selectedYear       = components.year;
+        
+        
+        NSArray * shortWeekdaySymbols = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
+        _weekDayNames  = @[shortWeekdaySymbols[1], shortWeekdaySymbols[2], shortWeekdaySymbols[3], shortWeekdaySymbols[4],
+                           shortWeekdaySymbols[5], shortWeekdaySymbols[6], shortWeekdaySymbols[0]];
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
-
-#pragma mark - Instance methods
-
--(UIButton *)dayButtonWithFrame:(CGRect)frame
+-(id)init
 {
-    UIButton *button                = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.layer.borderWidth        = _borderWidth/2.f;
-    button.layer.borderColor        = _mainColor.CGColor;
-    button.titleLabel.font          = [UIFont fontWithName:@"HelveticaNeue" size:15.0f];
-    button.frame                    = frame;
-    
-    return button;
+    self = [self initWithFrame:CGRectMake(0, 0, 320, 400)];
+    if (self)
+    {
+        
+    }
+    return self;
 }
 
-#pragma mark - Action methods
+#pragma mark - Public methods
 
--(IBAction)tappedDate:(UIButton *)sender
+-(void)showNextMonth
 {
-    _gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
-    if(!(_selectedDate == sender.tag && _selectedMonth == [components month] && _selectedYear == [components year]))
+    components.day = 1;
+    components.month ++;
+    NSDate * nextMonthDate =[_gregorian dateFromComponents:components];
+    
+    if ([self canSwipeToDate:nextMonthDate])
     {
-        if(_selectedDate != -1)
-        {
-            UIButton *previousSelected =(UIButton *) [self viewWithTag:_selectedDate];
-            [previousSelected setBackgroundColor:[UIColor clearColor]];
-            [previousSelected setTitleColor:_mainColor forState:UIControlStateNormal];
-        }
-        
-        [sender setBackgroundColor:_mainColor];
-        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _selectedDate = sender.tag;
-        NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
-        components.day = _selectedDate;
-        _selectedMonth = components.month;
-        _selectedYear = components.year;
-        NSDate *clickedDate = [_gregorian dateFromComponents:components];
-        [self.delegate tappedOnDate:clickedDate];
+        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        self.calendarDate = nextMonthDate;
+        components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
+        _selectedDate       = components.day;
+        _selectedMonth      = components.month;
+        _selectedYear       = components.year;
+        [self performViewTransition];
+    }
+    else
+    {
+        [self performViewNoSwipeAnimation];
     }
 }
 
-#pragma mark - Gesture recognizers
-
--(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
+-(void)showPreviousMonth
 {
-    [self handleSwipeToRightDirection:NO];
-}
-
--(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
-{
-    [self handleSwipeToRightDirection:YES];
-}
-
--(void)handleSwipeToRightDirection:(BOOL)toRight
-{
-    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
     components.day = 1;
-    components.month += (toRight ? -1:1);
-    self.calendarDate = [_gregorian dateFromComponents:components];
+    components.month --;
+    NSDate * prevMonthDate = [_gregorian dateFromComponents:components];
     
+    if ([self canSwipeToDate:prevMonthDate])
+    {
+        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        self.calendarDate = prevMonthDate;
+        components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
+        _selectedDate       = components.day;
+        _selectedMonth      = components.month;
+        _selectedYear       = components.year;
+        [self performViewTransition];
+    }
+    else
+    {
+        [self performViewNoSwipeAnimation];
+    }
+}
+
+#pragma mark - Various methods
+
+-(BOOL)canSwipeToDate:(NSDate *)date
+{
+    if (_datasource == nil)
+        return YES;
+    return [_datasource canSwipeToDate:date];
+}
+
+-(void)performViewTransition
+{
     [UIView transitionWithView:self
                       duration:0.5f
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -120,16 +144,139 @@
                     completion:nil];
 }
 
+-(void)performViewNoSwipeAnimation
+{
+    _shakeDirection = 1;
+    _shakes = 0;
+    [self shakeView:self];
+}
+
+// Taken from PinPad
+-(void)shakeView:(UIView *)theOneYouWannaShake
+{
+    [UIView animateWithDuration:0.05 animations:^
+     {
+         theOneYouWannaShake.transform = CGAffineTransformMakeTranslation(5*_shakeDirection, 0);
+         
+     } completion:^(BOOL finished)
+     {
+         if(_shakes >= 4)
+         {
+             theOneYouWannaShake.transform = CGAffineTransformIdentity;
+             return;
+         }
+         _shakes++;
+         _shakeDirection = _shakeDirection * -1;
+         [self shakeView:theOneYouWannaShake];
+     }];
+}
+
+#pragma mark - Button creation and configuration
+
+-(UIButton *)dayButtonWithFrame:(CGRect)frame
+{
+    UIButton *button                = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.layer.borderWidth        = _borderWidth/2.f;
+    button.layer.borderColor        = _borderColor.CGColor;
+    button.titleLabel.font          = [UIFont fontWithName:@"HelveticaNeue" size:15.0f];
+    button.frame                    = frame;
+    [button     addTarget:self action:@selector(tappedDate:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return button;
+}
+
+-(void)configureDayButton:(UIButton *)button withDate:(NSDate*)date
+{
+    NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:date];
+    [button setTitle:[NSString stringWithFormat:@"%ld",components.day] forState:UIControlStateNormal];
+    
+    if(components.day ==_selectedDate && components.month == _selectedMonth && components.year == _selectedYear)
+    {
+        button.layer.borderWidth = 0;
+        [button setTitleColor:_dayTxtColorSelected forState:UIControlStateNormal];
+        [button setBackgroundColor:_dayBgColorSelected];
+        return;
+    }
+    
+    [button setTitleColor:_dayTxtColorWithoutData forState:UIControlStateNormal];
+    [button setBackgroundColor:_dayBgColorWithoutData];
+    if (self.datasource != nil)
+    {
+        if ([self.datasource isDataForDate:date])
+        {
+            [button setTitleColor:_dayTxtColorWithData forState:UIControlStateNormal];
+            [button setBackgroundColor:_dayBgColorWithData];
+        }
+    }
+    
+    if (components.month != _selectedMonth)
+        button.alpha = 0.5f;
+}
+
+#pragma mark - Action methods
+
+-(IBAction)tappedDate:(UIButton *)sender
+{
+    NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
+    
+    if (sender.tag < 0 || sender.tag >= 40)
+    {
+        NSInteger offsetMonth   = (sender.tag < 0)?-1:1;
+        NSInteger offsetTag     = (sender.tag < 0)?40:-40;
+        
+        NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
+        components.day = 1;
+        components.month += offsetMonth;
+        NSDate * otherMonthDate =[_gregorian dateFromComponents:components];
+        
+        if ([self canSwipeToDate:otherMonthDate])
+        {
+            [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            self.calendarDate = otherMonthDate;
+            components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
+            
+            _selectedYear       = components.year;
+            _selectedMonth      = components.month;
+            _selectedDate       = sender.tag + offsetTag;
+            [self performViewTransition];
+        }
+        else
+        {
+            [self performViewNoSwipeAnimation];
+        }
+        return;
+    }
+    
+    if(!(_selectedDate == sender.tag && _selectedMonth == [components month] && _selectedYear == [components year]))
+    {
+        if(_selectedDate != -1)
+        {
+            components.day = _selectedDate;
+            _selectedDate = sender.tag;
+            
+            UIButton *previousSelected =(UIButton *) [self viewWithTag:components.day];
+            previousSelected.layer.borderWidth = _borderWidth/2.f;
+            [self configureDayButton:previousSelected withDate:[_gregorian dateFromComponents:components]];
+        }
+        
+        components.day = _selectedDate;
+        
+        sender.layer.borderWidth = 0;
+        [sender setBackgroundColor:_dayBgColorSelected];
+        [sender setTitleColor:_dayTxtColorSelected forState:UIControlStateNormal];
+        _selectedDate = sender.tag;
+        _selectedMonth = components.month;
+        _selectedYear = components.year;
+        NSDate *clickedDate = [_gregorian dateFromComponents:components];
+        [self.delegate tappedOnDate:clickedDate];
+    }
+}
 
 #pragma mark - Drawing methods
 
 - (void)drawRect:(CGRect)rect
 {
     NSDateComponents *components = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
-    
-    _selectedDate       = components.day;
-    _selectedMonth      = components.month;
-    _selectedYear       = components.year;
     
     components.day = 1;
     NSDate *firstDayOfMonth         = [_gregorian dateFromComponents:components];
@@ -143,42 +290,25 @@
     NSRange days = [_gregorian rangeOfUnit:NSDayCalendarUnit
                                     inUnit:NSMonthCalendarUnit
                                    forDate:self.calendarDate];
-    NSInteger originX = 20;
-    NSInteger originY = 60;
+
     NSInteger monthLength = days.length;
     NSInteger remainingDays = (monthLength + weekdayBeginning) % 7;
-    
-    // Frame drawing
-    NSInteger minY = originY + _dayWidth;
-    NSInteger maxY = originY + _dayWidth * (NSInteger)(1+(monthLength+weekdayBeginning)/7) + ((remainingDays !=0)? _dayWidth:0);
-    
-    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, _mainColor.CGColor);
-    CGContextAddRect(context, CGRectMake(originX - _borderWidth/2.f, minY - _borderWidth/2.f, 7*_dayWidth + _borderWidth, _borderWidth));
-    CGContextAddRect(context, CGRectMake(originX - _borderWidth/2.f, maxY - _borderWidth/2.f, 7*_dayWidth + _borderWidth, _borderWidth));
-    CGContextAddRect(context, CGRectMake(originX - _borderWidth/2.f, minY - _borderWidth/2.f, _borderWidth, maxY - minY));
-    CGContextAddRect(context, CGRectMake(originX + 7*_dayWidth - _borderWidth/2.f, minY - _borderWidth/2.f, _borderWidth, maxY - minY));
-    CGContextFillPath(context);
-    
-    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
     
     
     NSDateFormatter *format         = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"MMMM yyyy"];
     NSString *dateString            = [[format stringFromDate:self.calendarDate] uppercaseString];
-    UILabel *titleText              = [[UILabel alloc]initWithFrame:CGRectMake(0,20, self.bounds.size.width, 40)];
+    UILabel *titleText              = [[UILabel alloc]initWithFrame:CGRectMake(0,0, self.bounds.size.width, _dayWidth)];
     titleText.textAlignment         = NSTextAlignmentCenter;
     titleText.text                  = dateString;
     titleText.font                  = [UIFont fontWithName:@"Helvetica-Bold" size:15.0f];
     titleText.textColor             = _mainColor;
     [self addSubview:titleText];
     
-    __block CGRect frameWeekLabel = CGRectMake(0, originY, _dayWidth, _dayWidth);
-    [_weekNames enumerateObjectsUsingBlock:^(NSString * dayOfWeekString, NSUInteger idx, BOOL *stop)
+    __block CGRect frameWeekLabel = CGRectMake(0, _originY, _dayWidth, _dayWidth);
+    [_weekDayNames  enumerateObjectsUsingBlock:^(NSString * dayOfWeekString, NSUInteger idx, BOOL *stop)
     {
-        frameWeekLabel.origin.x         = originX+(_dayWidth*idx);
+        frameWeekLabel.origin.x         = _originX+(_dayWidth*idx);
         UILabel *weekNameLabel          = [[UILabel alloc] initWithFrame:frameWeekLabel];
         weekNameLabel.text              = dayOfWeekString;
         weekNameLabel.textColor         = _mainColor;
@@ -192,54 +322,68 @@
     {
         NSInteger offsetX   = (_dayWidth*((i+weekdayBeginning)%7));
         NSInteger offsetY   = (_dayWidth *((i+weekdayBeginning)/7));
-        UIButton *button    = [self dayButtonWithFrame:CGRectMake(originX+offsetX, originY+40+offsetY, _dayWidth, _dayWidth)];
+        UIButton *button    = [self dayButtonWithFrame:CGRectMake(_originX+offsetX, _originY+_dayWidth+offsetY, _dayWidth, _dayWidth)];
+        button.tag          = i+1;
+        components.day      = i+1;
         
-        [button     setTag:i+1];
-        [button     setTitle:[NSString stringWithFormat:@"%ld",i+1] forState:UIControlStateNormal];
-        [button     setTitleColor:_mainColor forState:UIControlStateNormal];
-        [button     addTarget:self action:@selector(tappedDate:) forControlEvents:UIControlEventTouchUpInside];
+    
+        [self configureDayButton:button withDate:[_gregorian dateFromComponents:components]];
         [self addSubview:button];
-        
-        if(i+1 ==_selectedDate && components.month == _selectedMonth && components.year == _selectedYear)
-        {
-            [button setBackgroundColor:_mainColor];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
     }
     
     NSDateComponents *previousMonthComponents = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
-    previousMonthComponents.month -=1;
+    previousMonthComponents.month --;
     NSDate *previousMonthDate = [_gregorian dateFromComponents:previousMonthComponents];
-    NSRange previousMonthDays = [_gregorian rangeOfUnit:NSDayCalendarUnit
-                   inUnit:NSMonthCalendarUnit
-                  forDate:previousMonthDate];
+    NSRange previousMonthDays = [_gregorian rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:previousMonthDate];
     NSInteger maxDate = previousMonthDays.length - weekdayBeginning;
     
     for (int i=0; i<weekdayBeginning; i++)
     {
-        NSInteger offsetX   = (_dayWidth*(i%7));
-        NSInteger offsetY   = (_dayWidth *(i/7));
-        UIButton *button    = [self dayButtonWithFrame:CGRectMake(originX+offsetX, originY+40+offsetY, _dayWidth, _dayWidth)];
+        previousMonthComponents.day     = maxDate+i+1;
+        NSInteger offsetX               = (_dayWidth*(i%7));
+        NSInteger offsetY               = (_dayWidth *(i/7));
+        UIButton *button                = [self dayButtonWithFrame:CGRectMake(_originX+offsetX, _originY + _dayWidth + offsetY, _dayWidth, _dayWidth)];
+        button.tag                      = -40 + maxDate+i+1;
         
-        [button     setTitle:[NSString stringWithFormat:@"%ld",maxDate+i+1] forState:UIControlStateNormal];
-        [button     setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [button     setEnabled:NO];
+        [self configureDayButton:button withDate:[_gregorian dateFromComponents:previousMonthComponents]];
         [self addSubview:button];
     }
     
-    if(remainingDays == 0)
-        return;
-
-    for (NSInteger i=remainingDays; i<7; i++)
+    if(remainingDays != 0)
     {
-        NSInteger offsetX   = (_dayWidth*((i) %7));
-        NSInteger offsetY   = (_dayWidth *((monthLength+weekdayBeginning)/7));
-        UIButton *button    = [self dayButtonWithFrame:CGRectMake(originX+offsetX, originY+40+offsetY, _dayWidth, _dayWidth)];
-        [button     setTitle:[NSString stringWithFormat:@"%ld",(i+1)-remainingDays] forState:UIControlStateNormal];
-        [button     setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [button     setEnabled:NO];
-        [self addSubview:button];
+        NSDateComponents *nextMonthComponents = [_gregorian components:_dayInfoUnits fromDate:self.calendarDate];
+        nextMonthComponents.month ++;
+        
+        for (NSInteger i=remainingDays; i<7; i++)
+        {
+            nextMonthComponents.day         = (i+1)-remainingDays;
+            NSInteger offsetX               = (_dayWidth*((i) %7));
+            NSInteger offsetY               = (_dayWidth *((monthLength+weekdayBeginning)/7));
+            UIButton *button                = [self dayButtonWithFrame:CGRectMake(_originX+offsetX, _originY + _dayWidth + offsetY, _dayWidth, _dayWidth)];
+            button.tag                      = 40 + (i+1)-remainingDays;
+            
+            [self configureDayButton:button withDate:[_gregorian dateFromComponents:nextMonthComponents]];
+            [self addSubview:button];
+        }
     }
+    
+    // Frame drawing
+    NSInteger minY = _originY + _dayWidth;
+    NSInteger maxY = _originY + _dayWidth * (NSInteger)(1+(monthLength+weekdayBeginning)/7) + ((remainingDays !=0)? _dayWidth:0);
+
+    
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, _borderColor.CGColor);
+    CGContextAddRect(context, CGRectMake(_originX - _borderWidth/2.f, minY - _borderWidth/2.f, 7*_dayWidth + _borderWidth, _borderWidth));
+    CGContextAddRect(context, CGRectMake(_originX - _borderWidth/2.f, maxY - _borderWidth/2.f, 7*_dayWidth + _borderWidth, _borderWidth));
+    CGContextAddRect(context, CGRectMake(_originX - _borderWidth/2.f, minY - _borderWidth/2.f, _borderWidth, maxY - minY));
+    CGContextAddRect(context, CGRectMake(_originX + 7*_dayWidth - _borderWidth/2.f, minY - _borderWidth/2.f, _borderWidth, maxY - minY));
+    CGContextFillPath(context);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
 }
+
+
 
 @end
