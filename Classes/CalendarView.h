@@ -19,6 +19,11 @@
 @property (nonatomic,weak) id<CalendarDelegate> delegate;
 @property (nonatomic,weak) id<CalendarDataSource> datasource;
 
+
+// Font
+@property (nonatomic, strong) UIFont * defaultFont;
+@property (nonatomic, strong) UIFont * titleFont;
+
 // Text color for month and weekday labels
 @property (nonatomic, strong) UIColor * monthAndDayTextColor;
 
@@ -39,13 +44,32 @@
 @property (nonatomic, assign) BOOL allowsChangeMonthBySwipe;
 @property (nonatomic, assign) BOOL allowsChangeMonthByButtons;
 
+// origin of the calendar Array
+@property (nonatomic, assign) NSInteger originX;
+@property (nonatomic, assign) NSInteger originY;
+
+// "Change month" animations
+@property (nonatomic, assign) UIViewAnimationOptions nextMonthAnimation;
+@property (nonatomic, assign) UIViewAnimationOptions prevMonthAnimation;
+
+// Miscellaneous
+@property (nonatomic, assign) BOOL keepSelDayWhenMonthChange;
+@property (nonatomic, assign) BOOL hideMonthLabel;
+
+
+
 @end
 
 
 
 @protocol CalendarDelegate <NSObject>
 
--(void)tappedOnDate:(NSDate *)selectedDate;
+-(void)dayChangedToDate:(NSDate *)selectedDate;
+
+@optional
+-(void)setHeightNeeded:(NSInteger)heightNeeded;
+-(void)setMonthLabel:(NSString *)monthLabel;
+-(void)setEnabledForPrevMonthButton:(BOOL)enablePrev nextMonthButton:(BOOL)enableNext;
 
 @end
 

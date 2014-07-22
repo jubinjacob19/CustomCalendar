@@ -39,9 +39,9 @@
 
 #pragma mark - CalendarDelegate protocol conformance
 
--(void)tappedOnDate:(NSDate *)selectedDate
+-(void)dayChangedToDate:(NSDate *)selectedDate
 {
-    NSLog(@"tappedOnDate %@(GMT)",selectedDate);
+    NSLog(@"dayChangedToDate %@(GMT)",selectedDate);
 }
 
 #pragma mark - Action methods

@@ -52,6 +52,9 @@
     _customCalendarView.borderWidth                 = 1;
     _customCalendarView.allowsChangeMonthByDayTap   = YES;
     _customCalendarView.allowsChangeMonthByButtons  = YES;
+    _customCalendarView.keepSelDayWhenMonthChange   = YES;
+    _customCalendarView.nextMonthAnimation          = UIViewAnimationOptionTransitionFlipFromRight;
+    _customCalendarView.prevMonthAnimation          = UIViewAnimationOptionTransitionFlipFromLeft;
     
     [self.view addSubview:_customCalendarView];
     
@@ -74,9 +77,9 @@
 
 #pragma mark - CalendarDelegate protocol conformance
 
--(void)tappedOnDate:(NSDate *)selectedDate
+-(void)dayChangedToDate:(NSDate *)selectedDate
 {
-    NSLog(@"tappedOnDate %@(GMT)",selectedDate);
+    NSLog(@"dayChangedToDate %@(GMT)",selectedDate);
 }
 
 #pragma mark - CalendarDataSource protocol conformance
@@ -91,7 +94,7 @@
 -(BOOL)canSwipeToDate:(NSDate *)date
 {
     NSDateComponents * yearComponent = [_gregorian components:NSYearCalendarUnit fromDate:date];
-    return (yearComponent.year == _currentYear);
+    return (yearComponent.year == _currentYear || yearComponent.year == _currentYear+1);
 }
 
 #pragma mark - Action methods
