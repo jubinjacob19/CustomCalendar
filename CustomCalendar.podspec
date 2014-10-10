@@ -16,7 +16,7 @@ DESC
   s.frameworks = "UIKit", "CoreGraphics","Foundation"
 
   s.source       = { :git => "https://github.com/jubinjacob19/CustomCalendar.git", :tag => "0.0.1", :commit => "636540bfec746244627c64bda0b0ac7391107119" }
-  s.source_files  = "SampleCalendar/*.{h,m}"
+  s.source_files  = "SampleCalendar/CalendarView.{h,m}"
   s.requires_arc = true
 
 end
