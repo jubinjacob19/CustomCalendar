@@ -34,7 +34,11 @@
     _sampleView= [[CalendarView alloc]initWithFrame:CGRectMake(0, 40, 320, 360)];
     _sampleView.delegate    = self;
     _sampleView.calendarDate = [NSDate date];
-    [self.view addSubview:_sampleView];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        [self.view addSubview:_sampleView];
+        _sampleView.center = CGPointMake(self.view.center.x, _sampleView.center.y);
+    });
 }
 
 #pragma mark - CalendarDelegate protocol conformance

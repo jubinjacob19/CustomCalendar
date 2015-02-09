@@ -23,6 +23,7 @@
 		77A30F271929E6DB00418A45 /* DefaultCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A30F261929E6DB00418A45 /* DefaultCalendarViewController.m */; };
 		8372D05B197D380E006A64AC /* CustomCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8372D05A197D380E006A64AC /* CustomCalendarViewController.m */; };
 		8372D05E197D3D2D006A64AC /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8372D05D197D3D2D006A64AC /* CalendarView.m */; };
+		F9A7F9B51A896421002249FC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A7F9B41A896421002249FC /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		8372D05A197D380E006A64AC /* CustomCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalendarViewController.m; sourceTree = "<group>"; };
 		8372D05C197D3D2D006A64AC /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarView.h; path = Classes/CalendarView.h; sourceTree = SOURCE_ROOT; };
 		8372D05D197D3D2D006A64AC /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarView.m; path = Classes/CalendarView.m; sourceTree = SOURCE_ROOT; };
+		F9A7F9B41A896421002249FC /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				77A30EFF1929B48400418A45 /* CalendarAppDelegate.h */,
 				77A30F001929B48400418A45 /* CalendarAppDelegate.m */,
 				77A30F021929B48400418A45 /* Main.storyboard */,
+				F9A7F9B41A896421002249FC /* LaunchScreen.xib */,
 				77A30F251929E6DB00418A45 /* DefaultCalendarViewController.h */,
 				77A30F261929E6DB00418A45 /* DefaultCalendarViewController.m */,
 				8372D059197D380E006A64AC /* CustomCalendarViewController.h */,
@@ -239,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9A7F9B51A896421002249FC /* LaunchScreen.xib in Resources */,
 				77A30F091929B48400418A45 /* Images.xcassets in Resources */,
 				77A30EFB1929B48400418A45 /* InfoPlist.strings in Resources */,
 				77A30F041929B48400418A45 /* Main.storyboard in Resources */,

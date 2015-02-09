@@ -56,7 +56,10 @@
     _customCalendarView.nextMonthAnimation          = UIViewAnimationOptionTransitionFlipFromRight;
     _customCalendarView.prevMonthAnimation          = UIViewAnimationOptionTransitionFlipFromLeft;
     
-    [self.view addSubview:_customCalendarView];
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        [self.view addSubview:_customCalendarView];
+        _customCalendarView.center = CGPointMake(self.view.center.x, _customCalendarView.center.y);
+    });
     
     NSDateComponents * yearComponent = [_gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
     _currentYear = yearComponent.year;
