@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>546FB69E-84BF-4C01-9940-960FB5E6C94A</string>
+	<string>7202CB21-2E3A-4638-8705-3E0B11E915C0</string>
 	<key>IDESourceControlProjectName</key>
 	<string>sampleCalendar</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>D167DEAA-CE72-4091-B9CE-C361C8E5A3E3</key>
-		<string>https://github.com/jubinjacob19/CustomCalendar.git</string>
+		<key>DE21B0E0F08FFD5CC7F93ACCB95D79672DEE800A</key>
+		<string>https://github.com/micazeve/CustomCalendar.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>sampleCalendar.xcodeproj/project.xcworkspace</string>
+	<string>sampleCalendar.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>D167DEAA-CE72-4091-B9CE-C361C8E5A3E3</key>
+		<key>DE21B0E0F08FFD5CC7F93ACCB95D79672DEE800A</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/jubinjacob19/CustomCalendar.git</string>
+	<string>https://github.com/micazeve/CustomCalendar.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>D167DEAA-CE72-4091-B9CE-C361C8E5A3E3</string>
+	<string>DE21B0E0F08FFD5CC7F93ACCB95D79672DEE800A</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>D167DEAA-CE72-4091-B9CE-C361C8E5A3E3</string>
+			<string>DE21B0E0F08FFD5CC7F93ACCB95D79672DEE800A</string>
 			<key>IDESourceControlWCCName</key>
-			<string>sampleCalendar</string>
+			<string>CustomCalendar</string>
 		</dict>
 	</array>
 </dict>
