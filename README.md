@@ -11,3 +11,5 @@ Swipe to change months.
 Delegate displays selected date(NSDate) on selection of a date. 
 
 Datasource allows some days to be highlighted and the calendar to be « locked » between a starting month and an ending month.
+
+Swift version added https://github.com/jubinjacob19/CustomCalendarSwift
