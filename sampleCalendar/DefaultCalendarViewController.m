@@ -48,6 +48,13 @@
     NSLog(@"dayChangedToDate %@(GMT)",selectedDate);
 }
 
+-(BOOL)shouldChangeDayToDate:(NSDate *)selectedDate
+{
+    if ([[NSDate date] compare:selectedDate] == NSOrderedAscending) {
+        return YES;
+    }
+    return NO;
+}
 #pragma mark - Action methods
 
 - (void)didReceiveMemoryWarning

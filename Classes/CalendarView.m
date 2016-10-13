@@ -217,6 +217,13 @@
     return [_datasource canSwipeToDate:date];
 }
 
+-(BOOL)shouldChangeDayToDate:(NSDate *)date {
+    if ([_delegate respondsToSelector:@selector(shouldChangeDayToDate:)]) {
+        return [_delegate shouldChangeDayToDate:date];
+    }
+    return YES;
+}
+
 -(void)performViewAnimation:(UIViewAnimationOptions)animation
 {
     NSDateComponents * components = [_gregorian components:_dayInfoUnits fromDate:_selectedDate];
@@ -323,7 +330,7 @@
         components.month += offsetMonth;
         NSDate * otherMonthDate =[_gregorian dateFromComponents:components];
         
-        if ([self canSwipeToDate:otherMonthDate])
+        if ([self canSwipeToDate:otherMonthDate] || [self shouldChangeDayToDate:otherMonthDate])
         {
             [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
             _calendarDate = otherMonthDate;
@@ -356,6 +363,12 @@
         componentsDateSel.month     = components.month;
         componentsDateSel.year      = components.year;
         _selectedDate               = [_gregorian dateFromComponents:componentsDateSel];
+        
+        // If returns NO, restore the old date and return
+        if (![self shouldChangeDayToDate:_selectedDate]) {
+            _selectedDate = oldSelectedDate;
+            return;
+        }
         
         // Configure  the new selected day button
         [self configureDayButton:sender             withDate:_selectedDate];
