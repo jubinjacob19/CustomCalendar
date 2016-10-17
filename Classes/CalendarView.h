@@ -67,6 +67,8 @@
 -(void)dayChangedToDate:(NSDate *)selectedDate;
 
 @optional
+-(BOOL)shouldChangeDayToDate:(NSDate *)selectedDate;
+
 -(void)setHeightNeeded:(NSInteger)heightNeeded;
 -(void)setMonthLabel:(NSString *)monthLabel;
 -(void)setEnabledForPrevMonthButton:(BOOL)enablePrev nextMonthButton:(BOOL)enableNext;
